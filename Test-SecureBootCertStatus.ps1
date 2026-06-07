@@ -197,12 +197,12 @@ $checker = {
         $result.Verdict = 'Compliant'
         $result.Detail  = 'KEK 2K CA 2023 and Windows UEFI CA 2023 present. The Windows boot path is covered for the 2026 expiry.'
         if ($thirdPartyMissing) {
-            $result.Detail += " Third-party CA(s) not in DB ($($thirdPartyMissing -join ', ')) -only relevant if this host boots non-Windows loaders or option ROMs."
+            $result.Detail += " Third-party CA(s) not in DB ($($thirdPartyMissing -join ', ')) - only relevant if this host boots non-Windows loaders or option ROMs."
         }
     }
     elseif ($result.Kek2023Present -or $result.Db2023Present.Count -gt 0) {
         $result.Verdict = 'InProgress'
-        $result.Detail  = "Partial 2023 rollout. Present: $($result.Db2023Present -join ', '). Still missing the Windows UEFI CA 2023 and/or KEK 2023 -re-check after the next servicing reboot, or deploy via Intune/GPO/firmware."
+        $result.Detail  = "Partial 2023 rollout. Present: $($result.Db2023Present -join ', '). Still missing the Windows UEFI CA 2023 and/or KEK 2023 - re-check after the next servicing reboot, or deploy via Intune/GPO/firmware."
     }
     else {
         $result.Verdict = 'ActionRequired'
