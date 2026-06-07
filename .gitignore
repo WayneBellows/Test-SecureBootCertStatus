@@ -1,0 +1,9 @@
+# Generated output from -OutputHtml
+secureboot-report.html
+*.report.html
+
+# Editor / OS cruft
+.vs/
+*.user
+Thumbs.db
+.DS_Store
