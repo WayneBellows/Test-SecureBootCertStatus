@@ -20,7 +20,7 @@
     before they fail.
 
     It is READ-ONLY. It does not modify firmware, certificates, or registry.
-    It does not deploy the 2023 certificates — for that, follow Microsoft's
+    It does not deploy the 2023 certificates -for that, follow Microsoft's
     Secure Boot playbook (link in the .LINK section) via Intune, Group Policy,
     or OEM firmware updates.
 
@@ -55,7 +55,7 @@
       - Troubleshooting Windows Server Secure Boot certificate update issues
     The certificate detection works by scanning the raw DB/KEK UEFI variables for
     the certificate common names. This is a pragmatic check, not a full ASN.1
-    parse — it answers "is the 2023 CA present in the firmware database yet?".
+    parse -it answers "is the 2023 CA present in the firmware database yet?".
 
 .LINK
     https://learn.microsoft.com/troubleshoot/windows-client/windows-security/update-secure-boot-certificates
@@ -170,7 +170,7 @@ $checker = {
         catch { }
     }
 
-    # 5. Secure Boot servicing events (1795 / 1801). Informational only — these
+    # 5. Secure Boot servicing events (1795 / 1801). Informational only -these
     #    relate to certificate servicing and can appear on healthy, fully-updated
     #    hosts too (confirmed on a managed Windows 365 Cloud PC), so they
     #    corroborate rather than determine the verdict. The DB is the ground truth.
@@ -197,12 +197,12 @@ $checker = {
         $result.Verdict = 'Compliant'
         $result.Detail  = 'KEK 2K CA 2023 and Windows UEFI CA 2023 present. The Windows boot path is covered for the 2026 expiry.'
         if ($thirdPartyMissing) {
-            $result.Detail += " Third-party CA(s) not in DB ($($thirdPartyMissing -join ', ')) — only relevant if this host boots non-Windows loaders or option ROMs."
+            $result.Detail += " Third-party CA(s) not in DB ($($thirdPartyMissing -join ', ')) -only relevant if this host boots non-Windows loaders or option ROMs."
         }
     }
     elseif ($result.Kek2023Present -or $result.Db2023Present.Count -gt 0) {
         $result.Verdict = 'InProgress'
-        $result.Detail  = "Partial 2023 rollout. Present: $($result.Db2023Present -join ', '). Still missing the Windows UEFI CA 2023 and/or KEK 2023 — re-check after the next servicing reboot, or deploy via Intune/GPO/firmware."
+        $result.Detail  = "Partial 2023 rollout. Present: $($result.Db2023Present -join ', '). Still missing the Windows UEFI CA 2023 and/or KEK 2023 -re-check after the next servicing reboot, or deploy via Intune/GPO/firmware."
     }
     else {
         $result.Verdict = 'ActionRequired'
